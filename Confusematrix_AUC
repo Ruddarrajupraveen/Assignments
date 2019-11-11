@@ -1,0 +1,49 @@
+import matplotlib.pyplot as plt
+class ConfusionMatrix:
+    def con_matrix(y_test,predictions):
+        tp=0
+        fp=0
+        tn=0
+        fn=0
+        for i in range(len(predictions)):
+            if y_test[i]==predictions[i]==1:
+                tp += 1
+            elif y_test[i]==1 and predictions[i]!=y_test[i]:
+                fp += 1
+            elif y_test[i]==predictions[i]==0:
+                tn += 1
+            elif y_test[i]==0 and predictions[i]!=y_test[i]:
+                fn += 1
+        print("The confusionn_matrix is:")
+        print(tp,"",fp)
+        print(tn,"",fn)
+
+        Accuracy=(tp+tn)/(tp+fp+tn+fn)
+        print("the Accuracy is:",Accuracy)
+
+        precision=tp/(tp+fp)
+        print("the precision is :",precision)
+
+        recall=tp/(tp+fn)
+        print("the Recall is:",recall)
+
+        fonescore=(2*precision*recall)/(precision+recall)
+        print("The f1_score is",fonescore)
+
+        fpr=fp/(fp+tn)
+        print("the fpr is:",fpr)
+
+        AUC=fpr*recall
+        print("the AUC is:",AUC)
+
+        plt.plot(fpr,recall)
+        plt.xlabel('false positive rate')
+        plt.ylabel('true positive rate')
+        plt.plot([0,1],[0,1],'k')
+        plt.title("ROC Curve")
+        plt.show()
+
+
+y_test=[1,1,0,1,1,0,1,1]
+predictions=[1,0,1,1,1,1,1,1]
+ConfusionMatrix.con_matrix(y_test,predictions)
